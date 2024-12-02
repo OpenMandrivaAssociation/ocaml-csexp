@@ -14,7 +14,7 @@
 
 Name:		ocaml-%{srcname}
 Version:	1.5.2
-Release:	2
+Release:	3
 Summary:	Parsing and printing of S-expressions in canonical form
 Group:		Development/OCaml
 License:	MIT
@@ -111,9 +111,28 @@ plugin(native) = "csexp.cmxs"
 EOF
 
 cat >> %{buildroot}%{_libdir}/ocaml/%{srcname}/dune-package << EOF
-(lang dune 2.8)
+(lang dune 3.15)
 (name csexp)
-(version %{version})
+(sections
+ (lib %{_libdir}/ocaml/csexp)
+ (libexec %{_libdir}/ocaml/csexp)
+ (doc %{_docdir}/%{name}))
+(files
+ (lib
+  (META
+   csexp.a
+   csexp.cma
+   csexp.cmi
+   csexp.cmt
+   csexp.cmti
+   csexp.cmx
+   csexp.cmxa
+   csexp.ml
+   csexp.mli
+   dune-package
+   opam))
+ (libexec (csexp.cmxs))
+ (doc (CHANGES.md LICENSE.md README.md)))
 (library
  (name csexp)
  (kind normal)
@@ -123,7 +142,10 @@ cat >> %{buildroot}%{_libdir}/ocaml/%{srcname}/dune-package << EOF
  (main_module_name Csexp)
  (modes byte native)
  (modules
-  (singleton (name Csexp) (obj_name csexp) (visibility public) (impl) (intf))))
+  (singleton
+   (obj_name csexp)
+   (visibility public)
+   (source (path Csexp) (intf (path csexp.mli)) (impl (path csexp.ml))))))
 EOF
 %endif
 
