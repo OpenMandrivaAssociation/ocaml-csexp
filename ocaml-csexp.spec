@@ -14,7 +14,7 @@
 
 Name:		ocaml-%{srcname}
 Version:	1.5.2
-Release:	1
+Release:	2
 Summary:	Parsing and printing of S-expressions in canonical form
 Group:		Development/OCaml
 License:	MIT
